@@ -7,4 +7,5 @@ Sau khi người dụng nhập số điện thoại hợp lệ thì chuyển san
 
 
 
-![Login Screen](Screenshot 2026-03-14 083307.png)
+![Login Screen](login.png)
+![Home Screen](home.png)
