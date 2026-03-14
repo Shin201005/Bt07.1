@@ -9,19 +9,32 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { useAuth } from "../../context/AuthContext";
 
-export default function App() {
-  const [phone, setPhone] = useState("");
+export default function Login({ navigation }: any) {
+  const [phoneInput, setPhoneInput] = useState("");
   const [error, setError] = useState("");
+  const { setPhone } = useAuth();
 
   const phoneRegex = /^0\d{9}$/;
 
   const onChangePhone = (text: string) => {
     const digitsOnly = text.replace(/[^\d]/g, "");
-    setPhone(digitsOnly);
+    setPhoneInput(digitsOnly);
 
-    if (phoneRegex.test(digitsOnly)) {
+    if (digitsOnly.length === 0) {
       setError("");
+    } else if (phoneRegex.test(digitsOnly)) {
+      setError("");
+    } else {
+      setError("Không hợp lệ");
+    }
+  };
+
+  const handleContinue = () => {
+    if (phoneRegex.test(phoneInput)) {
+      setPhone(phoneInput);
+      navigation.navigate("HomePage");
     } else {
       setError("Không hợp lệ");
     }
@@ -44,7 +57,7 @@ export default function App() {
             </Text>
 
             <TextInput
-              value={phone}
+              value={phoneInput}
               onChangeText={onChangePhone}
               placeholder="Nhập số điện thoại của bạn"
               keyboardType="number-pad"
@@ -54,19 +67,17 @@ export default function App() {
             />
 
             <View style={styles.resultBox}>
-              <View style={styles.resultBox}>
-  {error === "" && phone !== "" && (
-    <Text style={styles.valid}>Hợp lệ: {phone}</Text>
-  )}
+              {error === "" && phoneInput !== "" && (
+                <Text style={styles.valid}>Hợp lệ: {phoneInput}</Text>
+              )}
 
-  {error !== "" && (
-    <Text style={styles.invalid}>Không hợp lệ: {phone}</Text>
-  )}
-</View>
+              {error !== "" && (
+                <Text style={styles.invalid}>Không hợp lệ: {phoneInput}</Text>
+              )}
             </View>
           </View>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleContinue}>
             <Text style={styles.buttonText}>Tiếp tục</Text>
           </TouchableOpacity>
 

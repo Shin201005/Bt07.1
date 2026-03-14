@@ -7,5 +7,5 @@ Sau khi người dụng nhập số điện thoại hợp lệ thì chuyển san
 
 
 
-![Login Screen](login.png)
-![Home Screen](home.png)
+![Login Screen](login2.png)
+![Home Screen](home2.png)
